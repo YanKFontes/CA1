@@ -1,88 +1,97 @@
 package com.codewithyan;
 
 //Code by Yan
-//22/10/2020
+//Started: 22/10/2020
+//Finished:
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Scanner userInfo = new Scanner(System.in);
+        Scanner info = new Scanner(System.in);
+        //Scanner is used so I can get the user Keyboard input.
 
-        System.out.println("Hello, welcome to the User Input information!");
-        System.out.println("What's your First name?");
-        String userName = userInfo.nextLine();
 
-        System.out.println("What's your surname?");
-        String userSurname = userInfo.nextLine();
+            //Now, we will get input about the user information.
+            System.out.println("Welcome to User File Input information!");
+            System.out.println("");
 
-        System.out.println("Can you specify your gender? M for Male, F for Female, and T for Transgender");
-        char userGender = userInfo.next().charAt(0);
+            System.out.println("Let's get it started. What's your first name?");
+            String userName = info.nextLine();
 
-        System.out.println("How old are you?");
-        int userAge = userInfo.nextInt();
+            System.out.println("What's your surname?");
+            String userSurname = info.nextLine();
 
-        if (userAge > 100) {
-            System.out.println("You should be younger than 100 years old!");
-        }
+            char userGender;
+            do {
+                System.out.println("Please, specify your gender. Use 'M' for Male, 'F' for Female, and 'T' for Transgender!");
+                userGender = info.nextLine().charAt(0);
+            } while (userGender != 'M' && userGender != 'F' && userGender != 'T');
+            //Do-while was used here, so if the person input any number above 100 will return the question.
 
-        String title = "";
+            int userAge;
+            do {
+                System.out.println("How old are you? Make sure that you are younger than 100!");
+                userAge = info.nextInt();
+            } while (userAge > 100);
 
-        if (userGender == 'M') {
-            title = "Mr ";
-        } else if (userGender == 'F') {
-            title = "Ms ";
-        } else if (userGender == 'T') {
-            title = "Mx ";
-        } else {
-            System.out.println("Your gender was tipped wrong!");
-        }
 
-        String userStatus ="";
+            //Now, we are going to set the titles according to the gender.
+            String title = "";
 
-        if (userAge <= 18) {
-            userStatus = "School"; }
+            if (userGender == 'M') {
+                title = "Mr. ";
+            } else if (userGender == 'F') {
+                title = "Ms. ";
+            } else if (userGender == 'T') {
+                title = "Mx. ";
+            }
 
-        if (userAge >= 19) {
-            userStatus = "College"; }
 
-        if (userAge >= 26) {
-            userStatus = "Worker"; }
-        if (userAge >=67) {
-            userStatus = "Retired"; }
+            //Now, we will set the status, according to the age
+            String status = "";
 
-        String status = "status.txt";
+            if (userAge <= 18) {
+                status = "School";
+            }
+            if (userAge >= 19) {
+                status = "College";
+            }
+            if (userAge >= 26) {
+                status = "Worker";
+            }
+            if (userAge >= 67) {
+                status = "Retired";
+            }
 
+
+        //Now we will create the output file code
+        String file = "people.txt";
         try {
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(status, true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 
+            //Here was added the user Title, Surname, name and Status
             writer.write(title);
-            writer.write(userSurname+',');
+            writer.write(userSurname+",");
             writer.write(" " + userName.charAt(0));
 
             writer.newLine();
 
-            writer.write(userGender);
-
-            writer.newLine();
-
-            writer.write(userStatus);
-
+            writer.write(status);
             writer.newLine();
 
             writer.close();
 
+        } catch (Exception e) {
 
-
-        } catch (IOException e) {
-            System.out.println("File not found!");
         }
+
+
+
 
 
 
